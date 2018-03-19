@@ -117,8 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label1.Text" xml:space="preserve">
-    <value>RetroMinus removes the Big Keys from Retro, bringing closer to the style of Z1. All Big Key doors have been replaced with small key doors or open doors, and Big Chests have been replaced with small chests. This is intended to be run on a Customizer Retro rom where Big Keys are shuffled outside of their dungeon.</value>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>16, 14</value>
+  </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>16, 14</value>
+  </metadata>
+  <data name="checkBox2.ToolTip" xml:space="preserve">
+    <value>Sets the take-anys locations to the same 5 caves: 
+ - Desert Fairy
+ - 20 Rupee Cave
+ - West DWDM Fairy
+ - Mire Hint Cave
+ - DW IceRod Hint
+The sword remains randomized in one of these caves.
+
+Does not work on Entrance Rando ROMs.</value>
+  </data>
+  <data name="checkBox4.ToolTip" xml:space="preserve">
+    <value>Sets the following 5 shops to be key&amp;arrow shops:
+ - Lake Hylia Cave Shop
+ - Paradox Cave Shop
+ - DW Lumberjack Shop
+ - Hammer Shop
+ - Dark Lake Hylia Shop
+Fire Shield Shop will exist and always sell an arrow.
+
+Does not work on Entrance Rando ROMs.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
