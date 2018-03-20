@@ -326,7 +326,6 @@ namespace RetroMinus
                             shopData[9, 7] = 0x13;
                         }
 
-
                         for (int i = 0; i < 9; i++)//reorder their shop IDs
                             shopData[i, 0] = Convert.ToByte(i);
                         shopData[9, 0] = 0xFF;
@@ -342,17 +341,41 @@ namespace RetroMinus
                                 ROM_DATA[0x184800 + j + i * 8] = shopData[i,j];
                             }
                         }
-
-                        for (int i = 0; i < 11; i++)
-                        {//scan shop info to find which takeany has the sword
-                            if (ROM_DATA[0x184805 + i * 8] == 0x81)
+                        
+                        if (checkBox2.Checked)
+                        {//things that need to be done now instead of at the normal spot
+                            for (int i = 0; i < 25; i++)
                             {
-                                swordCave = Convert.ToInt32(ROM_DATA[0x184800 + i * 8]);
-                                if (swordCave == 0xFF && ROM_DATA[0x184850] != 0x00)
-                                    swordCave = 10;
-                                else if (swordCave == 0xFF && ROM_DATA[0x184850] == 0x00)
-                                    swordCave = 9;
-                                break;
+                                if (ROM_DATA[0x178000 + ROM_DATA[0x1780AF + i * 7]] != 0xFF)
+                                {
+                                    swordCave = 5 + ((ROM_DATA[0x178000 + ROM_DATA[0x1780AF + i * 7]] * 7 / 3) % 5);
+                                }
+                            }
+                            position = 0x184828;
+                            if (ROM_DATA[0x184850] != 0x00)
+                            {
+                                swordCave += 1;
+                                position += 8;
+                            }
+                            for (int i = 0; i < 5; i++)
+                            {
+                                if (ROM_DATA[position + 5 + i * 8] == 0x81)
+                                    ROM_DATA[position + 5 + i * 8] = 0x82;
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < 11; i++)
+                            {//scan shop info to find which takeany has the sword
+                                if (ROM_DATA[0x184805 + i * 8] == 0x81)
+                                {
+                                    swordCave = Convert.ToInt32(ROM_DATA[0x184800 + i * 8]);
+                                    if (swordCave == 0xFF && ROM_DATA[0x184850] != 0x00)
+                                        swordCave = 10;
+                                    else if (swordCave == 0xFF && ROM_DATA[0x184850] == 0x00)
+                                        swordCave = 9;
+                                    break;
+                                }
                             }
                         }
 
@@ -389,7 +412,10 @@ namespace RetroMinus
                                         ROM_DATA[position] = 0xFF;
                                     else
                                         ROM_DATA[position] = Convert.ToByte(i + 6);
-                                    ROM_DATA[position + 1] = 0x5E;
+                                    if (ROM_DATA[0x180041] != 0x00)
+                                        ROM_DATA[position + 1] = 0x46;
+                                    else
+                                        ROM_DATA[position + 1] = 0x5E;
                                     ROM_DATA[position + 2] = 0x00;
                                     position += 8;
                                 }
@@ -416,7 +442,10 @@ namespace RetroMinus
                                         ROM_DATA[position] = 0xFF;
                                     else
                                         ROM_DATA[position] = Convert.ToByte(i + 5);
-                                    ROM_DATA[position + 1] = 0x5E;
+                                    if (ROM_DATA[0x180041] != 0x00)
+                                        ROM_DATA[position + 1] = 0x46;
+                                    else
+                                        ROM_DATA[position + 1] = 0x5E;
                                     ROM_DATA[position + 2] = 0x00;
                                     position += 8;
                                 }
@@ -453,12 +482,15 @@ namespace RetroMinus
                             ROM_DATA[0xDBBE4] = 0x58; ROM_DATA[0xDBBED] = 0x58; ROM_DATA[0xDBBE2] = 0x58; ROM_DATA[0xDBBDC] = 0x58; ROM_DATA[0xDBBD4] = 0x58;
                             position = 0x184828;
                             if (ROM_DATA[0x184850] != 0x00)
-                                position+=8;
+                                position += 8;
+                            ROM_DATA[0x18482D + (swordCave - 5) * 8] = 0x81;
                             ROM_DATA[position] = Convert.ToByte(5 + ((position - 0x184828) / 8)); ROM_DATA[position+1] = 0x12; ROM_DATA[position+2] = 0x01; ROM_DATA[position+3] = 0x72; ROM_DATA[position+4] = 0x00; ROM_DATA[position+6] = 0xE2; ROM_DATA[position+7] = Convert.ToByte(15 + (((position - 0x184828)*3)/8));
                             ROM_DATA[position+8] = Convert.ToByte(6 + ((position - 0x184828) / 8)); ROM_DATA[position+9] = 0x12; ROM_DATA[position+10] = 0x01; ROM_DATA[position+11] = 0x7B; ROM_DATA[position+12] = 0x00; ROM_DATA[position+14] = 0xE2; ROM_DATA[position+15] = Convert.ToByte(16 + (((position - 0x184828) * 3) / 8));
                             ROM_DATA[position+16] = Convert.ToByte(7 + ((position - 0x184828) / 8)); ROM_DATA[position + 17] = 0x12; ROM_DATA[position+18] = 0x01; ROM_DATA[position+19] = 0x70; ROM_DATA[position+20] = 0x00; ROM_DATA[position+22] = 0xE2; ROM_DATA[position+23] = Convert.ToByte(17 + (((position - 0x184828) * 3) / 8));
                             ROM_DATA[position+24] = Convert.ToByte(8 + ((position - 0x184828) / 8)); ROM_DATA[position + 25] = 0x12; ROM_DATA[position+26] = 0x01; ROM_DATA[position+27] = 0x62; ROM_DATA[position+28] = 0x00; ROM_DATA[position+30] = 0xE2; ROM_DATA[position+31] = Convert.ToByte(18 + (((position - 0x184828) * 3) / 8));
                             ROM_DATA[position+32] = 0xFF; ROM_DATA[position + 33] = 0x12; ROM_DATA[position+34] = 0x01; ROM_DATA[position+35] = 0x6A; ROM_DATA[position+36] = 0x00; ROM_DATA[position+38] = 0xE2; ROM_DATA[position+39] = Convert.ToByte(19 + (((position - 0x184828) * 3) / 8));
+
+
                         }
 
                         if (checkBox4.Checked)
@@ -478,7 +510,7 @@ namespace RetroMinus
                                 for (int i = 0; i < 4; i++)
                                 {
                                     ROM_DATA[position] = Convert.ToByte(6 + i);
-                                    if (ROM_DATA[position + 1] != 0x5E)
+                                    if (ROM_DATA[position + 1] != 0x5E && ROM_DATA[position + 1] != 0x46)
                                     {
                                         position += 8;
                                         ROM_DATA[position] = Convert.ToByte(6 + i);
@@ -563,7 +595,7 @@ namespace RetroMinus
                         }
                         for (int i = 0; i < 27; i++)
                         {//for all shop contents 
-                            if (ROM_DATA[0x184901 + i * 8] == 0x5E)
+                            if (ROM_DATA[0x184901 + i * 8] == 0x5E || ROM_DATA[0x184901 + i * 8] == 0x46)
                             {//if its the sword item block
                                 for (int j = 0; j < 0x1849DF - (0x184907 + i*8); j++)
                                 {//shift everything beyond that block over by 8 bytes
@@ -654,7 +686,14 @@ namespace RetroMinus
                             lampCount += 1;
                         //if its not easy mode
                         if (lampCount == 1)
-                            ROM_DATA[0x184002] = 0x5E;//become progressive sword
+                        {
+                            if (ROM_DATA[0x180041] != 0x00)
+                                ROM_DATA[0x184002] = 0x47;//become twenty rupees #2
+                            else
+                                ROM_DATA[0x184002] = 0x5E;//become progressive sword
+
+                            
+                        }
                         if (lampCount > 1)
                             ROM_DATA[0x184002] = 0x3E;//become boss heart
                     }
@@ -686,11 +725,6 @@ namespace RetroMinus
         }
 
         private void toolTip1_Popup(object sender, PopupEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
         {
 
         }
